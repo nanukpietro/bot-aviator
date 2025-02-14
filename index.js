@@ -1,29 +1,29 @@
-const TelegramBot = require('node-telegram-bot-api');
-const express = require('express');
-const dotenv = require('dotenv');
+const TelegramBot = require("node-telegram-bot-api");
+const express = require("express");
+const dotenv = require("dotenv");
 
-// Carica le variabili d'ambiente
 dotenv.config();
 
-// Ottieni il token del bot dalle variabili d'ambiente
-const token = process.env.TOKEN_BOT;
-const bot = new TelegramBot(token, { polling: true });
+const TOKEN = process.env.TOKEN_BOT;
+const bot = new TelegramBot(TOKEN, { polling: true });
 
-// Crea un server web per evitare che Render lo termini
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    res.send('Bot is running');
+// Configura Express per evitare errori di timeout su Render
+app.get("/", (req, res) => {
+  res.send("Bot Aviator è attivo!");
 });
 
-app.listen(3000, () => {
-    console.log('Web server running on port 3000');
+app.listen(PORT, () => {
+  console.log(`Server avviato sulla porta ${PORT}`);
 });
 
-// Gestisci il comando /start
 bot.onText(/\/start/, (msg) => {
-    const chatId = msg.chat.id;
-    bot.sendMessage(chatId, 'Benvenuto! Sono il tuo assistente per Aviator.');
+  const chatId = msg.chat.id;
+  bot.sendMessage(chatId, "Benvenuto! Sono il tuo assistente per Aviator.");
 });
 
-// Aggiungi altri comandi qui...
+// Qui puoi aggiungere altre funzioni per il bot
+
+console.log("Bot Telegram avviato correttamente...");
